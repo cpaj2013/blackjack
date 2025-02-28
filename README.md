@@ -1,3 +1,12 @@
+# How to Play
+### Run via a Versioned Jar and Command Line
+1. Download jar of version of your choice to a folder on your computer.
+2. Make sure your command line is pointed to the directory your jar is in and run the following:
+```
+java -jar ./<jar name>.jar
+```
+3. Enjoy the game!
+
 # About the File Structure
 ```
 card-game/
