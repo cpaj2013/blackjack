@@ -45,7 +45,6 @@ public class HandUtils {
     public static boolean checkForBust(Hand hand) {
         int sumOfHand = calculateSumOfHand(hand);
         if (sumOfHand > BlackjackConstants.BUST_LIMIT) {
-            System.out.println("Bust. " + (sumOfHand - BlackjackConstants.BUST_LIMIT) + " over.");
             return true;
         }
         return false;

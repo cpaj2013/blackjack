@@ -79,7 +79,7 @@ public class BlackjackService {
     public String checkForWinner() {
         int dealerScore = dealerService.calculateSumOfHand();
         int playerScore = playerService.calculateSumOfHand();
-        if (dealerScore > playerScore) {
+        if (dealerScore > playerScore && !dealerService.didDealerBust()) {
             System.out.println("The dealer has won. " + dealerScore + " to " + playerScore);
             return BlackjackConstants.DEALER;
         } else if (dealerScore == playerScore) {

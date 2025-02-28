@@ -25,11 +25,14 @@ public class Hand {
         return card;
     }
 
-    // TODO create test
+    public int size() {
+        return hand.size();
+    }
+
     public String toString() {
         String handAsString = " | ";
         for (Card c : hand) {
-            handAsString = handAsString + c.getRank().getDisplayValue() + c.getSuit().getSymbol() + " | ";
+            handAsString += c.toString() + " | ";
         }
         return handAsString;
     }

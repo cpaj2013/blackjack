@@ -32,14 +32,22 @@ public class DealerService {
     }
 
     public void addCardToHand(Card card) {
+        if (hand.size() == 0) {
+            card.setFlipped(true);
+        }
         hand.addCard(card);
     }
 
     // TODO create test
     public void simulateDealerHand(Deck deck) {
+        flipCard(hand.getHand().get(0));
         while (HandUtils.calculateSumOfHand(hand) < BlackjackConstants.DEALER_MAX_SCORE_HIT_LIMIT) {
             dealerHit(deck.drawCard());
         }
+    }
+
+    public void flipCard(Card card) {
+        card.setFlipped(!card.isFlipped());
     }
 
     public boolean didDealerBust() {
