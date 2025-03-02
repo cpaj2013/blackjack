@@ -41,7 +41,6 @@ public class HandUtils {
         return runningSum;
     }
 
-    // TODO create test
     public static boolean checkForBust(Hand hand) {
         int sumOfHand = calculateSumOfHand(hand);
         if (sumOfHand > BlackjackConstants.DEFAULT_BUST_LIMIT) {

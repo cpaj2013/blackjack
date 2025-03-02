@@ -70,7 +70,6 @@ public class BlackjackService {
      *
      * @return False if hand cannot be split.
      */
-    //TODO tests needed
     public boolean playerSplit() {
         if (!playerService.canSplitHand(playerService.getCurrentHand()))
             return false;
@@ -131,7 +130,6 @@ public class BlackjackService {
         dealerService.simulateDealerHand(deckService.getDeck());
     }
 
-    // TODO create test coverage
     public String checkForWinner(Hand playerHand) {
         int dealerScore = dealerService.calculateSumOfHand();
         int playerHandScore = playerService.calculateSumOfHand(playerHand);
