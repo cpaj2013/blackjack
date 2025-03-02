@@ -43,24 +43,30 @@ public class BlackjackApplication implements CommandLineRunner {
 
 				do {
 					System.out.println(blackjackService.generatePlayerAndDealerCardAndScoreSummary());
-					System.out.print("Type '(H)it', '(S)tand', or '(E)xit': ");
+					System.out.print("Type '(H)it', '(X) Stand', '(S)plit', or '(E)xit': ");
 
 					userInput = scanner.nextLine();
 
 					if (userInput.equalsIgnoreCase("h") || userInput.equalsIgnoreCase("Hit")) {
-						if (blackjackService.playerHit()) {
-							System.out.println(CLIOutputUtils.generateOutputString("You busted."
-									, BlackjackConstants.CLI_LINE_SEPARATOR));
+						if (!blackjackService.playerHit()) {
 							break;
 						}
 						blackjackService.generatePlayerAndDealerCardAndScoreSummary();
-					} else if (userInput.equalsIgnoreCase("s") || userInput.equalsIgnoreCase("Stand")) {
-						blackjackService.simulateDealerHand();
-						System.out.println(blackjackService.checkForWinner());
+					} else if (userInput.equalsIgnoreCase("x") || userInput.equalsIgnoreCase("Stand")) {
+						if (!blackjackService.playerStand()) {
+							blackjackService.simulateDealerHand();
+							break;
+						}
 						break;
+					} else if (userInput.equalsIgnoreCase("s") || userInput.equalsIgnoreCase("Split")) {
+						if (!blackjackService.playerSplit()) {
+							System.out.println(CLIOutputUtils.generateOutputString("Cannot split current hand."
+									, BlackjackConstants.CLI_LINE_SEPARATOR));
+						}
 					}
 
-				} while (userInput.equalsIgnoreCase("h") || userInput.equalsIgnoreCase("Hit"));
+				} while (userInput.equalsIgnoreCase("h") || userInput.equalsIgnoreCase("Hit")
+				|| userInput.equalsIgnoreCase("s") || userInput.equalsIgnoreCase("Split"));
 			}
 
 			System.out.println(blackjackService.endGame());

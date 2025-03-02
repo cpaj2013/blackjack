@@ -19,9 +19,12 @@ public class Hand {
         cardList.add(card);
     }
 
-    public Card removeCard(Card card) {
-        cardList.remove(card);
-        return card;
+    public boolean removeCard(Card card) {
+        return cardList.remove(card);
+    }
+
+    public Card removeCard(int index) {
+        return cardList.remove(index);
     }
 
     public Card getCard(int index) {
@@ -51,4 +54,13 @@ public class Hand {
             }
         }
     }
+
+    public boolean isSplittable() {
+        if (cardList.size() != 2) {
+            // TODO log why not splittable
+            return false;
+        }
+        return getCard(0).equals(getCard(1));
+    }
+
 }

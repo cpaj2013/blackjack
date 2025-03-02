@@ -13,7 +13,7 @@ plugins {
 }
 
 group = 'com.org'
-version = 'v0.3.0-alpha'
+version = 'v1.0.0-beta'
 
 repositories {
     // Use Maven Central for resolving dependencies.

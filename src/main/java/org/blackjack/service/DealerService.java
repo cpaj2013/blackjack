@@ -33,7 +33,7 @@ public class DealerService {
         if (!hand.isEmpty()) {
             hand.getCard(0).flipCard();
         }
-        while (HandUtils.calculateSumOfHand(hand) < BlackjackConstants.DEALER_MAX_SCORE_HIT_LIMIT) {
+        while (HandUtils.calculateSumOfHand(hand) < BlackjackConstants.DEFAULT_DEALER_MAX_SCORE_HIT_LIMIT) {
             dealerHit(deck.drawCard());
         }
     }
@@ -46,7 +46,7 @@ public class DealerService {
         return hand.toString();
     }
 
-    public void initializeHand() {
+    public void initializeDealer() {
         this.hand = new Hand();
     }
 

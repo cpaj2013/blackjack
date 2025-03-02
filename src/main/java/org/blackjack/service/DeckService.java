@@ -32,18 +32,16 @@ public class DeckService {
     }
 
     public Deck populateAndShuffleDeck() {
-        return populateAndShuffleDeckByMultiplier(BlackjackConstants.DEFAULT_DECK_MULTIPLIER);
+        return populateAndShuffleDeck(BlackjackConstants.DEFAULT_DECK_MULTIPLIER);
     }
 
     // future logic to handle multiple decks
-    public Deck populateAndShuffleDeckByMultiplier(int multiplier) {
+    public Deck populateAndShuffleDeck(int multiplier) {
         // for each rank, for each suit
         for (int i = 0; i < multiplier; i++) {
             populateDeck();
         }
-
         deck.shuffle();
-
         return deck;
     }
 

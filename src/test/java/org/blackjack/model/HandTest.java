@@ -38,4 +38,30 @@ public class HandTest {
             Assertions.assertTrue(c.isFaceUp());
         }
     }
+
+    @Test
+    public void testIsSplittableTrue() {
+        Hand hand = new Hand();
+
+        Card c1 = new Card(Rank.SEVEN, Suit.CLUB);
+        Card c2 = new Card(Rank.SEVEN, Suit.HEART);
+
+        hand.addCard(c1);
+        hand.addCard(c2);
+
+        Assertions.assertTrue(hand.isSplittable());
+    }
+
+    @Test
+    public void testIsSplittableFalse() {
+        Hand hand = new Hand();
+
+        Card c1 = new Card(Rank.TEN, Suit.CLUB);
+        Card c2 = new Card(Rank.SEVEN, Suit.HEART);
+
+        hand.addCard(c1);
+        hand.addCard(c2);
+
+        Assertions.assertFalse(hand.isSplittable());
+    }
 }
