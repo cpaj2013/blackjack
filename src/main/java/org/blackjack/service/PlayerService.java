@@ -1,10 +1,12 @@
 package org.blackjack.service;
 
+import lombok.Getter;
 import org.blackjack.model.Card;
 import org.blackjack.model.Hand;
 import org.blackjack.utilities.HandUtils;
 import org.springframework.stereotype.Service;
 
+@Getter
 @Service
 public class PlayerService {
 

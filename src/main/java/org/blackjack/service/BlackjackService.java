@@ -1,20 +1,19 @@
 package org.blackjack.service;
 
-import lombok.Getter;
+import lombok.Setter;
 import org.blackjack.constants.BlackjackConstants;
+import org.blackjack.utilities.CLIOutputUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Getter
 @Service
 public class BlackjackService {
 
-    DealerService dealerService;
-    PlayerService playerService;
-    DeckService deckService;
+    private DealerService dealerService;
+    private PlayerService playerService;
+    private DeckService deckService;
 
-    public boolean gameInProgress = false;
-    boolean dealersTurn = false;
+    private boolean playerTurnOver = false;
 
     @Autowired
     public BlackjackService(DealerService dealerService, PlayerService playerService, DeckService deckService) {
@@ -23,14 +22,14 @@ public class BlackjackService {
         this.deckService = deckService;
     }
 
+    // TODO create tests
     public void startGame() {
         deckService.initializeDeck();
         dealerService.initializeHand();
         playerService.initializeHand();
+        setPlayerTurnOver(false);
         deckService.populateAndShuffleDeck();
         dealHands();
-        displayAllPlayerAndDealerCards();
-        gameInProgress = true;
     }
 
     // TODO create test
@@ -42,36 +41,30 @@ public class BlackjackService {
         }
     }
 
-    public void endGame() {
-        this.gameInProgress = false;
-        this.dealersTurn = true;
-    }
-
+    // TODO create tests
     public boolean playerHit() {
         playerService.playerHit(deckService.drawCard());
         return playerService.didPlayerBust();
     }
 
-    // TODO create test
-    public String displayCardsAndScore(String player) {
-        String stringValue;
+    public String generateCardAndScoreSummary(String player) {
+        String stringValue = player + " ";
         if (player.equals(BlackjackConstants.DEALER)) {
-            stringValue = dealerService.handToString() + "|| " + dealerService.calculateSumOfHand();
+            return stringValue + dealerService.handToString() + "|| " +
+                    (isPlayerTurnOver() ? dealerService.calculateSumOfHand() : "XX");
         } else {
-            stringValue = playerService.handToString() + "|| " + playerService.calculateSumOfHand();
+            return stringValue + playerService.handToString() + "|| " + playerService.calculateSumOfHand();
         }
-
-        System.out.println(player + " | " + stringValue);
-        return stringValue;
     }
 
-    public void displayAllPlayerAndDealerCards() {
-        displayCardsAndScore(BlackjackConstants.DEALER);
-        displayCardsAndScore(BlackjackConstants.PLAYER);
+    public String generatePlayerAndDealerCardAndScoreSummary() {
+        return CLIOutputUtils.generateMultiLineOutputString(generateCardAndScoreSummary(BlackjackConstants.DEALER)
+                , generateCardAndScoreSummary(BlackjackConstants.PLAYER));
     }
 
     // dealer logic
     public void simulateDealerHand() {
+        setPlayerTurnOver(true);
         dealerService.simulateDealerHand(deckService.getDeck());
     }
 
@@ -80,13 +73,28 @@ public class BlackjackService {
         int dealerScore = dealerService.calculateSumOfHand();
         int playerScore = playerService.calculateSumOfHand();
         if (dealerScore > playerScore && !dealerService.didDealerBust()) {
-            System.out.println("The dealer has won. " + dealerScore + " to " + playerScore);
-            return BlackjackConstants.DEALER;
+            return CLIOutputUtils.generateOutputString
+                            ("The dealer has won. " + dealerScore + " to " + playerScore
+                    , BlackjackConstants.CLI_LINE_SEPARATOR);
         } else if (dealerScore == playerScore) {
-            System.out.println("Draw. " + dealerScore + " to " + playerScore);
-            return BlackjackConstants.TIE;
+            return CLIOutputUtils.generateOutputString("Draw. " + dealerScore + " to " + playerScore
+                    , BlackjackConstants.CLI_LINE_SEPARATOR);
         }
-        System.out.println("The player has won. " + playerScore + " to " + dealerScore);
-        return BlackjackConstants.PLAYER;
+        return CLIOutputUtils.generateOutputString("The player has won. " + playerScore + " to " + dealerScore
+                , BlackjackConstants.CLI_LINE_SEPARATOR);
+    }
+
+    public String endGame() {
+        setPlayerTurnOver(true);
+        dealerService.flipAllCardsFaceUp();
+        return generatePlayerAndDealerCardAndScoreSummary();
+    }
+
+    public void setPlayerTurnOver(boolean playerTurnOver) {
+        this.playerTurnOver = playerTurnOver;
+    }
+
+    public boolean isPlayerTurnOver() {
+        return playerTurnOver;
     }
 }

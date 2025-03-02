@@ -2,7 +2,6 @@ package org.blackjack.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.blackjack.constants.BlackjackConstants;
 
 import java.util.ArrayList;
 
@@ -10,30 +9,46 @@ import java.util.ArrayList;
 @Setter
 public class Hand {
 
-    ArrayList<Card> hand;
+    private ArrayList<Card> cardList;
 
     public Hand() {
-        hand = new ArrayList<>();
+        cardList = new ArrayList<>();
     }
 
     public void addCard(Card card) {
-        hand.add(card);
+        cardList.add(card);
     }
 
     public Card removeCard(Card card) {
-        hand.remove(card);
+        cardList.remove(card);
         return card;
     }
 
+    public Card getCard(int index) {
+        return cardList.get(index);
+    }
+
     public int size() {
-        return hand.size();
+        return cardList.size();
     }
 
     public String toString() {
         String handAsString = " | ";
-        for (Card c : hand) {
+        for (Card c : cardList) {
             handAsString += c.toString() + " | ";
         }
         return handAsString;
+    }
+
+    public boolean isEmpty() {
+        return cardList.isEmpty();
+    }
+
+    public void flipAllCardsFaceUp() {
+        for (Card c : cardList) {
+            if (!c.isFaceUp()) {
+                c.flipCard();
+            }
+        }
     }
 }

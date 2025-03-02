@@ -30,7 +30,7 @@ public class BlackjackServiceTest {
 
         String result = blackjackService.checkForWinner();
 
-        Assertions.assertEquals(BlackjackConstants.PLAYER, result);
+        Assertions.assertTrue(result.contains("The player has won."));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class BlackjackServiceTest {
 
         String result = blackjackService.checkForWinner();
 
-        Assertions.assertEquals(BlackjackConstants.DEALER, result);
+        Assertions.assertTrue(result.contains("The dealer has won."));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class BlackjackServiceTest {
 
         String result = blackjackService.checkForWinner();
 
-        Assertions.assertEquals(BlackjackConstants.TIE, result);
+        Assertions.assertTrue(result.contains("Draw."));
     }
 
     @Test
@@ -67,6 +67,35 @@ public class BlackjackServiceTest {
 
         String result = blackjackService.checkForWinner();
 
-        Assertions.assertEquals(BlackjackConstants.PLAYER, result);
+        Assertions.assertTrue(result.contains("The player has won."));
+    }
+
+    @Test
+    public void testGenerateCardAndScoreSummaryForDealerWhenPlayerTurnIsNotOverDoesNotShowScore() {
+        blackjackService = new BlackjackService(dealerService, playerService, deckService);
+
+        String result = blackjackService.generateCardAndScoreSummary(BlackjackConstants.DEALER);
+        Assertions.assertTrue(result.endsWith("XX"));
+    }
+
+    @Test
+    public void testGenerateCardAndScoreSummaryForDealerWhenPlayerTurnIsOverShowsScore() {
+        blackjackService = new BlackjackService(dealerService, playerService, deckService);
+        blackjackService.setPlayerTurnOver(true);
+
+        Mockito.when(dealerService.calculateSumOfHand()).thenReturn(10);
+
+        String result = blackjackService.generateCardAndScoreSummary(BlackjackConstants.DEALER);
+        Assertions.assertTrue(result.endsWith("10"));
+    }
+
+    @Test
+    public void testGenerateCardAndScoreSummaryForPlayerShowsScore() {
+        blackjackService = new BlackjackService(dealerService, playerService, deckService);
+
+        Mockito.when(playerService.calculateSumOfHand()).thenReturn(10);
+
+        String result = blackjackService.generateCardAndScoreSummary(BlackjackConstants.PLAYER);
+        Assertions.assertTrue(result.endsWith("10"));
     }
 }

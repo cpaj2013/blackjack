@@ -10,14 +10,19 @@ import org.blackjack.enums.Suit;
 public class Card {
     private Rank rank;
     private Suit suit;
-    private boolean flipped = false;
+    private boolean faceUp = true;
 
     public Card(Rank rank, Suit suit) {
         this.rank = rank;
         this.suit = suit;
     }
 
+    public boolean flipCard() {
+        faceUp = !faceUp;
+        return faceUp;
+    }
+
     public String toString() {
-        return (flipped ? "X" : getRank().getDisplayValue() + getSuit().getSymbol());
+        return (faceUp ? getRank().getDisplayValue() + getSuit().getSymbol() : "X");
     }
 }

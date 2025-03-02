@@ -56,9 +56,9 @@ public class HandUtilsTest {
     @Test
     public void testCheckForBustTrue() {
         Hand hand = new Hand();
-        hand.getHand().add(new Card(Rank.KING, Suit.CLUB));
-        hand.getHand().add(new Card(Rank.KING, Suit.HEART));
-        hand.getHand().add(new Card(Rank.KING, Suit.SPADE));
+        hand.getCardList().add(new Card(Rank.KING, Suit.CLUB));
+        hand.getCardList().add(new Card(Rank.KING, Suit.HEART));
+        hand.getCardList().add(new Card(Rank.KING, Suit.SPADE));
 
         Assertions.assertTrue(HandUtils.checkForBust(hand));
     }
@@ -66,8 +66,8 @@ public class HandUtilsTest {
     @Test
     public void testCheckForBustFalse() {
         Hand hand = new Hand();
-        hand.getHand().add(new Card(Rank.KING, Suit.CLUB));
-        hand.getHand().add(new Card(Rank.KING, Suit.HEART));
+        hand.getCardList().add(new Card(Rank.KING, Suit.CLUB));
+        hand.getCardList().add(new Card(Rank.KING, Suit.HEART));
 
         Assertions.assertFalse(HandUtils.checkForBust(hand));
     }

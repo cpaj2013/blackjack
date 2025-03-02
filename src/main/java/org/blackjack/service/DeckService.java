@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DeckService {
 
-    Deck deck;
+    private Deck deck;
 
     DeckService() {
         this.deck = new Deck();

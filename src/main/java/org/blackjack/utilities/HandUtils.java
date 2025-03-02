@@ -12,7 +12,7 @@ public class HandUtils {
      */
     public static int calculateSumOfHand(Hand hand) {
         int sum = 0;
-        for (Card c : hand.getHand()) {
+        for (Card c : hand.getCardList()) {
             if (c.getRank().getSecondaryValue() == null) {
                 sum += c.getRank().getPrimaryValue();
             }
@@ -28,7 +28,7 @@ public class HandUtils {
      * @return calculated sum
      */
     private static int calculateSumOfAces(Hand hand, int runningSum) {
-        for (Card c : hand.getHand()) {
+        for (Card c : hand.getCardList()) {
             if (c.getRank().getSecondaryValue() != null) {
                 int primaryValue = c.getRank().getPrimaryValue();
                 if (runningSum + primaryValue <= BlackjackConstants.BUST_LIMIT) {

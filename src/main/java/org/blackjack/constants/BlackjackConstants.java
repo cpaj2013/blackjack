@@ -7,6 +7,7 @@ public class BlackjackConstants {
     public static final String DEALER = "DEALER";
     public static final String PLAYER = "PLAYER";
     public static final String TIE = "TIE";
+    public static final String CLI_LINE_SEPARATOR = "========================";
 
     // dealer specific constants
     public static final int DEALER_MAX_SCORE_HIT_LIMIT = 17;
