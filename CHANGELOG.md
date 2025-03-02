@@ -6,6 +6,8 @@
 - Adjusted scoring to account for split/multi hands.
 - Show win/loss/bust details on card output instead of seperate line
 - Added Blackjack split functionality for current hand.
+- made Stand short key an 'X', so split can be 'S'
+
 
 ### Fixed
 - fixed issue where a hit would cause the game to end.
