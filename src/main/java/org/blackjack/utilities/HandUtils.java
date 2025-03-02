@@ -31,7 +31,7 @@ public class HandUtils {
         for (Card c : hand.getCardList()) {
             if (c.getRank().getSecondaryValue() != null) {
                 int primaryValue = c.getRank().getPrimaryValue();
-                if (runningSum + primaryValue <= BlackjackConstants.BUST_LIMIT) {
+                if (runningSum + primaryValue <= BlackjackConstants.DEFAULT_BUST_LIMIT) {
                     runningSum += primaryValue;
                 } else {
                     runningSum += c.getRank().getSecondaryValue();
@@ -41,10 +41,9 @@ public class HandUtils {
         return runningSum;
     }
 
-    // TODO create test
     public static boolean checkForBust(Hand hand) {
         int sumOfHand = calculateSumOfHand(hand);
-        if (sumOfHand > BlackjackConstants.BUST_LIMIT) {
+        if (sumOfHand > BlackjackConstants.DEFAULT_BUST_LIMIT) {
             return true;
         }
         return false;

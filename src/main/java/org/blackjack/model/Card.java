@@ -25,4 +25,21 @@ public class Card {
     public String toString() {
         return (faceUp ? getRank().getDisplayValue() + getSuit().getSymbol() : "X");
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Card card = (Card) obj;
+        return rank.equals(card.rank);
+    }
+
+    @Override
+    public int hashCode() {
+        return rank.hashCode();
+    }
 }

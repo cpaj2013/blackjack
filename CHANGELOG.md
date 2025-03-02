@@ -1,5 +1,21 @@
 # Changelog
 
+## [v1.0.0-beta] - March 2, 2025
+### Added
+- Adjusted command line output to be more readable.
+- Adjusted scoring to account for split/multi hands.
+- Show win/loss/bust details on card output instead of seperate line
+- Added Blackjack split functionality for current hand.
+- made Stand short key an 'X', so split can be 'S'
+
+### Fixed
+- fixed issue where a hit would cause the game to end.
+
+### Known Issues
+- Invalid character input can cause some unwanted behavior.
+- Win/loss tracking will come in a future release.
+- When a dealer has score of 17 and players score is higher, but less than 21 give auto win.
+
 ## [v0.3.0-alpha] - March 1, 2025
 ### Added
 - Cleaned up command line output.

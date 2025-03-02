@@ -1,7 +1,6 @@
 package org.blackjack.enums;
 
 import lombok.Getter;
-import org.springframework.stereotype.Component;
 
 @Getter
 public enum Suit {
