@@ -17,37 +17,25 @@ public class DealerService {
     }
 
     // TODO fix issue where dealer draws card even though it may not use it
-   public boolean dealerHit(Card card) {
-        if (HandUtils.calculateSumOfHand(hand) < BlackjackConstants.DEALER_MAX_SCORE_HIT_LIMIT) {
-            hand.addCard(card);
-            return true;
-        } else {
-            System.out.println("Dealer must stand.");
-            return false;
-        }
-    }
-
-    public void dealerStand() {
-        // TODO this should trigger end of game and calculate final results
+    private boolean dealerHit(Card card) {
+        addCardToHand(card);
+        return didDealerBust();
     }
 
     public void addCardToHand(Card card) {
         if (hand.size() == 0) {
-            card.setFlipped(true);
+            card.flipCard();
         }
         hand.addCard(card);
     }
 
-    // TODO create test
     public void simulateDealerHand(Deck deck) {
-        flipCard(hand.getHand().get(0));
+        if (!hand.isEmpty()) {
+            hand.getCard(0).flipCard();
+        }
         while (HandUtils.calculateSumOfHand(hand) < BlackjackConstants.DEALER_MAX_SCORE_HIT_LIMIT) {
             dealerHit(deck.drawCard());
         }
-    }
-
-    public void flipCard(Card card) {
-        card.setFlipped(!card.isFlipped());
     }
 
     public boolean didDealerBust() {
@@ -64,6 +52,14 @@ public class DealerService {
 
     public int calculateSumOfHand() {
         return HandUtils.calculateSumOfHand(hand);
+    }
+
+    public void flipAllCardsFaceUp() {
+        hand.flipAllCardsFaceUp();
+    }
+
+    public Hand getHand() {
+        return hand;
     }
 
 }

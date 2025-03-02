@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class Player {
 
-    protected Hand hand;
+    private Hand hand;
 
     public Player() {
         this.hand = new Hand();

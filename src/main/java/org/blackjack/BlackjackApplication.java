@@ -2,6 +2,7 @@ package org.blackjack;
 
 import org.blackjack.constants.BlackjackConstants;
 import org.blackjack.service.BlackjackService;
+import org.blackjack.utilities.CLIOutputUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -41,24 +42,28 @@ public class BlackjackApplication implements CommandLineRunner {
 				blackjackService.startGame();
 
 				do {
+					System.out.println(blackjackService.generatePlayerAndDealerCardAndScoreSummary());
 					System.out.print("Type '(H)it', '(S)tand', or '(E)xit': ");
+
 					userInput = scanner.nextLine();
 
 					if (userInput.equalsIgnoreCase("h") || userInput.equalsIgnoreCase("Hit")) {
 						if (blackjackService.playerHit()) {
-							System.out.println("You busted.");
+							System.out.println(CLIOutputUtils.generateOutputString("You busted."
+									, BlackjackConstants.CLI_LINE_SEPARATOR));
 							break;
 						}
-						blackjackService.displayAllPlayerAndDealerCards();
+						blackjackService.generatePlayerAndDealerCardAndScoreSummary();
 					} else if (userInput.equalsIgnoreCase("s") || userInput.equalsIgnoreCase("Stand")) {
 						blackjackService.simulateDealerHand();
-						blackjackService.checkForWinner();
+						System.out.println(blackjackService.checkForWinner());
+						break;
 					}
 
 				} while (userInput.equalsIgnoreCase("h") || userInput.equalsIgnoreCase("Hit"));
 			}
 
-			blackjackService.displayAllPlayerAndDealerCards();
+			System.out.println(blackjackService.endGame());
 
 		} while (!userInput.equalsIgnoreCase("e") && !userInput.equalsIgnoreCase("Exit"));
 
