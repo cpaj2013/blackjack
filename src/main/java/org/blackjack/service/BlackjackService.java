@@ -1,5 +1,7 @@
 package org.blackjack.service;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.blackjack.constants.BlackjackConstants;
 import org.blackjack.model.Hand;
 import org.blackjack.utilities.CLIOutputUtils;
@@ -16,6 +18,7 @@ public class BlackjackService {
     private DeckService deckService;
 
     private boolean playerTurnOver = false;
+    private boolean gameActive = false;
 
     @Autowired
     public BlackjackService(DealerService dealerService, PlayerService playerService, DeckService deckService) {
@@ -31,6 +34,7 @@ public class BlackjackService {
         dealerService.initializeDealer();
         playerService.initializePlayer();
         setPlayerTurnOver(false);
+        setGameActive(true);
 
         // card setup
         deckService.populateAndShuffleDeck();
@@ -40,6 +44,7 @@ public class BlackjackService {
     public String endGame() {
         // if the player didn't bust but stood on all decks, their turn is now over
         setPlayerTurnOver(true);
+        setGameActive(false);
         dealerService.flipAllCardsFaceUp();
         return generatePlayerAndDealerCardAndScoreSummary();
     }
@@ -155,5 +160,13 @@ public class BlackjackService {
 
     public boolean isPlayerTurnOver() {
         return playerTurnOver;
+    }
+
+    public void setGameActive(boolean isActive) {
+        this.gameActive = isActive;
+    }
+
+    public boolean isGameActive() {
+        return gameActive;
     }
 }
